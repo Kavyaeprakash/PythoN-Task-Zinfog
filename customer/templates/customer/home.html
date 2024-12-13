@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Home</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh;">
+
+    <div style="text-align: center; background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 100%; max-width: 500px;">
+        <h1 style="font-size: 32px; color: #333; margin-bottom: 20px;">Welcome to the Shop</h1>
+
+        <nav style="display: flex; flex-direction: column; gap: 15px;">
+            <a href="{% url 'signup' %}" 
+               style="text-decoration: none; padding: 12px; background-color: #007BFF; color: white; font-size: 18px; border-radius: 4px; transition: background-color 0.3s;">
+               Sign Up
+            </a>
+
+            <a href="{% url 'login' %}" 
+               style="text-decoration: none; padding: 12px; background-color: #28a745; color: white; font-size: 18px; border-radius: 4px; transition: background-color 0.3s;">
+               Login
+            </a>
+        </nav>
+    </div>
+
+</body>
+</html>

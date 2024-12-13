@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .address-section {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <div id="cart-container">
+        {% for product in cart_products %}
+            <div class="product">
+                <h3>{{ product.name }}</h3>
+                <p>Price: ${{ product.price }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="address-section">
+        <h2>Enter Delivery Address</h2>
+        <form action="{% url 'place_order' %}" method="post">
+            {% csrf_token %}
+            <label for="address-line">Address:</label>
+            <input type="text" id="address-line" name="address_line" placeholder="Enter your address" required>
+            <br>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" placeholder="Enter your city" required>
+            <br>
+            <label for="postal-code">Postal Code:</label>
+            <input type="text" id="postal-code" name="postal_code" placeholder="Enter your postal code" required>
+            <br>
+            {% for product in cart_products %}
+                <input type="hidden" name="product_ids" value="{{ product.id }}">
+            {% endfor %}
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <style>
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .product h3 {
+            margin: 0;
+        }
+
+        .product-actions {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .cart-button {
+            margin-top: 20px;
+        }
+
+        .rating-form {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product List</h1>
+    <!-- Checkout Form -->
+    <form action="{% url 'checkout' %}" method="post">
+        {% csrf_token %}
+        <div id="product-container">
+            {% for product in products %}
+                <div class="product">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p>Price: ${{ product.price }}</p>
+                    <p>Rating: {{ product.rating }} ({{ product.total_ratings }} ratings)</p>
+
+                    <div class="product-actions">
+                        <!-- Select Product for Cart -->
+                        <label>
+                            <input type="checkbox" name="product_ids" value="{{ product.id }}"> Add to Cart
+                        </label>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <!-- Checkout Button -->
+        <button type="submit">Checkout</button>
+    </form>
+
+    <!-- Rating Forms (Separate Forms) -->
+    <div id="rating-container">
+        {% for product in products %}
+            <div class="product-rating">
+                <h4>Rate {{ product.name }}</h4>
+                <form action="{% url 'rate_product' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <label for="rating-{{ product.id }}">Rate:</label>
+                    <select id="rating-{{ product.id }}" name="rating">
+                        {% for i in "12345" %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Submit Rating</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+</body>
